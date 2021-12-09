@@ -4,23 +4,23 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
 import React, { useCallback, useEffect, useMemo } from 'react';
 
-const autocompleteService = { current: null };
 
-/**
- * AddressAutocomplete component
- * @param {Object} props
- * @param {String} props.apiKey Google Maps API key
- * @param {String} props.label  Label for the input
- * @returns {React.ReactElement}
- */
+const autocompleteService: { current: google.maps.places.AutocompleteService | null } = { current: null };
+
+export interface AddressAutocompleteProps {
+  apiKey: string;
+  label: string;
+  [x:string]: any;
+}
+
 const AddressAutocomplete = ({
   apiKey,
   label,
   rest
-}) => {
+}: AddressAutocompleteProps) => {
   const loaded = React.useRef(false);
-  const [addressOptions, setAddressOptions] = React.useState([]);
-  const [addressValue, setAddressValue] = React.useState(null);
+  const [addressOptions, setAddressOptions] = React.useState<unknown[]>([]);
+  const [addressValue, setAddressValue] = React.useState<unknown>(null);
   const [addressInputValue, setAddressInputValue] = React.useState('');
 
   // Options label
@@ -43,7 +43,7 @@ const AddressAutocomplete = ({
   // Address input renderer
   const renderAddressInput = useCallback((params) => (
     <TextField {...params} fullWidth label={label} />
-  ), [t]);
+  ), []);
 
   // Options renderer
   const renderAddressOption = useCallback((props, option) => {
@@ -51,7 +51,7 @@ const AddressAutocomplete = ({
       structured_formatting: {
         main_text_matched_substrings: matches
       }
-    } = option;
+    }: { structured_formatting: { main_text_matched_substrings: [{ offset: number; length: number }] } } = option;
     const parts = parse(
       option.structured_formatting.main_text,
       matches.map((match) => [match.offset, match.offset + match.length]),
@@ -93,7 +93,7 @@ const AddressAutocomplete = ({
       script.setAttribute('async', '');
       script.setAttribute('id', 'google-maps');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-      document.querySelector('head').appendChild(script);
+      document.querySelector('head')!.appendChild(script);
     }
 
     loaded.current = true;
@@ -101,7 +101,7 @@ const AddressAutocomplete = ({
 
   // Autocomplete predictions fetcher
   const fetch = useMemo(() => throttle((request, callback) => {
-    autocompleteService.current.getPlacePredictions(request, callback);
+    if (autocompleteService.current) autocompleteService.current.getPlacePredictions(request, callback);
   }, 200), []);
 
   // Runs on input change
@@ -125,9 +125,9 @@ const AddressAutocomplete = ({
     }
 
     // Fetch autocomplete predictions
-    fetch({ input: addressInputValue }, (results) => {
+    fetch({ input: addressInputValue }, (results: unknown[]) => {
       if (active) {
-        let newOptions = [];
+        let newOptions: unknown[] = [];
 
         // Include selected address
         if (addressValue) {
