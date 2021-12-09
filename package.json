@@ -1,0 +1,58 @@
+{
+  "name": "mui-address-autocomplete",
+  "version": "0.0.0",
+  "description": "",
+  "main": "./lib/AddressAutocomplete.js",
+  "scripts": {
+    "build": "webpack",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zenoo/mui-address-autocomplete.git"
+  },
+  "keywords": [
+    "react",
+    "address",
+    "autocomplete",
+    "google",
+    "maps",
+    "mui",
+    "material-ui",
+    "search"
+  ],
+  "author": "Zenoo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zenoo/mui-address-autocomplete/issues"
+  },
+  "homepage": "https://github.com/Zenoo/mui-address-autocomplete#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^6.5.1",
+    "path": "^0.12.7",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "standard-version": "^9.3.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
+    "@mui/material": "^5.2.3",
+    "autosuggest-highlight": "^3.2.0",
+    "lodash.throttle": "^4.1.1"
+  }
+}
