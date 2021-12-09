@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.1...v0.0.2) (2021-12-09)
+
+
+### Bug Fixes
+
+* Added react types ([7d6b30b](https://github.com/Zenoo/mui-address-autocomplete/commit/7d6b30b7cf67f10b83a0294a4fd330f7e29f7f20))
+
 ### 0.0.1 (2021-12-09)
 
 
