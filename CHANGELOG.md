@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.9...v0.0.10) (2021-12-10)
+
+
+### Bug Fixes
+
+* Wrong sed params ([87e8b52](https://github.com/Zenoo/mui-address-autocomplete/commit/87e8b524c200071413245d176e20043f3b86f01b))
+
 ### [0.0.9](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.8...v0.0.9) (2021-12-10)
 
 
