@@ -13,3 +13,5 @@ export interface BoxTypeMap<P = {}> {
  * @returns {React.ReactElement}
  */
 declare const AddressAutocomplete: React.ReactElement<BoxTypeMap>;
+
+export default AddressAutocomplete;
