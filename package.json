@@ -5,9 +5,6 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/AddressAutocomplete.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "NODE_ENV=production babel src/AddressAutocomplete.js --out-dir dist",
     "release": "standard-version",
