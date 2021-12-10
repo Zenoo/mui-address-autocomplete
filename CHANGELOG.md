@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.12...v0.0.13) (2021-12-10)
+
+
+### Bug Fixes
+
+* Wrong TS props ([cb60d9f](https://github.com/Zenoo/mui-address-autocomplete/commit/cb60d9f8c5c5cfadda28fcb42c02cf1ef71199d9))
+
 ### [0.0.12](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.11...v0.0.12) (2021-12-10)
 
 
