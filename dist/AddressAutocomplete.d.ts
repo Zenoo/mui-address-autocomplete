@@ -10,4 +10,3 @@ declare function AddressAutocomplete({ apiKey, label, ...rest }: {
     apiKey: string;
     label: string;
 }): React.ReactElement;
-//# sourceMappingURL=AddressAutocomplete.d.ts.map
