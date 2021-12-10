@@ -9,7 +9,7 @@ npm i mui-address-autocomplete
 ## Usage
 
 ```jsx
-import { AddressAutocomplete } from 'mui-address-autocomplete';
+import AddressAutocomplete from 'mui-address-autocomplete';
 
 <AddressAutocomplete
   apiKey="googlePlacesApiKeyHere"
