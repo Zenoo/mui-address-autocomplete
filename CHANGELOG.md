@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.7...v0.0.8) (2021-12-10)
+
+
+### Bug Fixes
+
+* Created README ([2833edd](https://github.com/Zenoo/mui-address-autocomplete/commit/2833edd9f7290adf2eb4f1a65d6da952eb6da98e))
+* Release dist only ([7a76ac0](https://github.com/Zenoo/mui-address-autocomplete/commit/7a76ac0f62953b601a07e34f535ef66a6b40ab1c))
+
 ### [0.0.7](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.6...v0.0.7) (2021-12-10)
 
 
