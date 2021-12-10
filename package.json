@@ -9,8 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "compile": "rm -rf dist && NODE_ENV=production babel src --out-dir dist --copy-files",
-    "generate-types": "npx tsc",
+    "build": "NODE_ENV=production babel src/AddressAutocomplete.js --out-dir dist",
     "release": "standard-version"
   },
   "repository": {
@@ -71,7 +70,7 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "npm run compile && npm run generate-types && git add dist && git commit -m \"chore(release): update dist\""
+      "prerelease": "npm run build && git add dist && git diff --quiet && git diff --staged --quiet || git commit -am \"chore(release): Build\""
     }
   }
 }

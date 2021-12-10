@@ -1,4 +1,10 @@
-export default AddressAutocomplete;
+export interface BoxTypeMap<P = {}> {
+  props: P & {
+    apiKey: string;
+    label: string;
+  };
+}
+
 /**
  * AddressAutocomplete component
  * @param {Object} props
@@ -6,8 +12,4 @@ export default AddressAutocomplete;
  * @param {String} props.label  Label for the input
  * @returns {React.ReactElement}
  */
-declare function AddressAutocomplete({ apiKey, label, ...rest }: {
-    apiKey: string;
-    label: string;
-}): React.ReactElement;
-//# sourceMappingURL=AddressAutocomplete.d.ts.map
+declare const AddressAutocomplete: React.ReactElement<BoxTypeMap>;
