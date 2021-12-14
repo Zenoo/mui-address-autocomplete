@@ -21,7 +21,7 @@ var _lodash = _interopRequireDefault(require("lodash.throttle"));
 
 var _react = _interopRequireWildcard(require("react"));
 
-const _excluded = ["apiKey", "label"];
+const _excluded = ["apiKey", "label", "onChange", "value"];
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -43,13 +43,17 @@ const autocompleteService = {
  * @param {Object} props
  * @param {String} props.apiKey Google Maps API key
  * @param {String} props.label  Label for the input
+ * @param {Function} props.onChange  Change callback
+ * @param {Object} props.value  Address value
  * @returns {React.ReactElement}
  */
 
 const AddressAutocomplete = _ref => {
   let {
     apiKey,
-    label
+    label,
+    onChange,
+    value
   } = _ref,
       rest = _objectWithoutProperties(_ref, _excluded);
 
@@ -57,10 +61,14 @@ const AddressAutocomplete = _ref => {
 
   const [addressOptions, setAddressOptions] = _react.default.useState([]);
 
-  const [addressValue, setAddressValue] = _react.default.useState(null);
+  const [addressValue, setAddressValue] = _react.default.useState(value);
 
-  const [addressInputValue, setAddressInputValue] = _react.default.useState(''); // Options label
+  const [addressInputValue, setAddressInputValue] = _react.default.useState(''); // Update inner value when props value change
 
+
+  (0, _react.useEffect)(() => {
+    setAddressValue(value);
+  }, [value]); // Options label
 
   const getOptionLabel = (0, _react.useCallback)(option => typeof option === 'string' ? option : option.description, []); // Empty filter
 
@@ -69,7 +77,8 @@ const AddressAutocomplete = _ref => {
   const selectAddress = (0, _react.useCallback)((_, newValue) => {
     setAddressOptions(previous => newValue ? [newValue, ...previous] : previous);
     setAddressValue(newValue);
-  }, []); // Address input change
+    onChange(newValue);
+  }, [onChange]); // Address input change
 
   const searchAddress = (0, _react.useCallback)((_, newInputValue) => {
     setAddressInputValue(newInputValue);
