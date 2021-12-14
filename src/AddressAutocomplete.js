@@ -11,17 +11,26 @@ const autocompleteService = { current: null };
  * @param {Object} props
  * @param {String} props.apiKey Google Maps API key
  * @param {String} props.label  Label for the input
+ * @param {Function} props.onChange  Change callback
+ * @param {Object} props.value  Address value
  * @returns {React.ReactElement}
  */
 const AddressAutocomplete = ({
   apiKey,
   label,
+  onChange,
+  value,
   ...rest
 }) => {
   const loaded = React.useRef(false);
   const [addressOptions, setAddressOptions] = React.useState([]);
-  const [addressValue, setAddressValue] = React.useState(null);
+  const [addressValue, setAddressValue] = React.useState(value);
   const [addressInputValue, setAddressInputValue] = React.useState('');
+
+  // Update inner value when props value change
+  useEffect(() => {
+    setAddressValue(value);
+  }, [value]);
 
   // Options label
   const getOptionLabel = useCallback((option) => (typeof option === 'string' ? option : option.description), []);
@@ -33,7 +42,8 @@ const AddressAutocomplete = ({
   const selectAddress = useCallback((_, newValue) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
     setAddressValue(newValue);
-  }, []);
+    onChange(newValue);
+  }, [onChange]);
 
   // Address input change
   const searchAddress = useCallback((_, newInputValue) => {
