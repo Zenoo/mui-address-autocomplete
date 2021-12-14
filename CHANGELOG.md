@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.15...v0.0.16) (2021-12-14)
+
+
+### Bug Fixes
+
+* Import missing core-js ([3aee99a](https://github.com/Zenoo/mui-address-autocomplete/commit/3aee99a7e89dea8999e21d0a951aaee3cc5f69c0))
+
 ### [0.0.15](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.14...v0.0.15) (2021-12-14)
 
 
