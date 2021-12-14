@@ -31,9 +31,9 @@
   "author": "Zenoo",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
     "@emotion/react": "^11.7.0",
@@ -41,6 +41,7 @@
     "@mui/icons-material": "^5.2.1",
     "@mui/material": "^5.2.3",
     "autosuggest-highlight": "^3.2.0",
+    "core-js": "^3.19.3",
     "lodash.throttle": "^4.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
