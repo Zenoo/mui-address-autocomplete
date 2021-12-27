@@ -91,31 +91,34 @@ const AddressAutocomplete = _ref => {
 
   const selectAddress = (0, _react.useCallback)((_, newValue) => {
     setAddressOptions(previous => newValue ? [newValue, ...previous] : previous);
-    placesService.current.getDetails({
-      placeId: newValue.place_id,
-      fields
-    }, place => {
-      const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
-        components: place.address_components.reduce((acc, item) => {
-          item.types.forEach(type => {
-            if (!acc[type]) {
-              acc[type] = [];
-            }
 
-            acc[type].push({
-              long_name: item.long_name,
-              short_name: item.short_name
+    if (newValue) {
+      placesService.current.getDetails({
+        placeId: newValue.place_id,
+        fields
+      }, place => {
+        const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
+          components: place.address_components.reduce((acc, item) => {
+            item.types.forEach(type => {
+              if (!acc[type]) {
+                acc[type] = [];
+              }
+
+              acc[type].push({
+                long_name: item.long_name,
+                short_name: item.short_name
+              });
             });
-          });
-          return acc;
-        }, {}),
-        description: newValue.description,
-        place_id: newValue.place_id
-      });
+            return acc;
+          }, {}),
+          description: newValue.description,
+          place_id: newValue.place_id
+        });
 
-      setAddressValue(placeWithComponents);
-      onChange(placeWithComponents);
-    });
+        setAddressValue(placeWithComponents);
+        onChange(placeWithComponents);
+      });
+    }
   }, [onChange]); // Address input change
 
   const searchAddress = (0, _react.useCallback)((_, newInputValue) => {
