@@ -69,6 +69,9 @@ const AddressAutocomplete = ({
         setAddressValue(placeWithComponents);
         onChange(placeWithComponents);
       });
+    } else {
+      setAddressValue(null);
+      onChange(null);
     }
   }, [onChange]);
 
