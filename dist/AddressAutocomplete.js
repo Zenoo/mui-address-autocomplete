@@ -118,6 +118,9 @@ const AddressAutocomplete = _ref => {
         setAddressValue(placeWithComponents);
         onChange(placeWithComponents);
       });
+    } else {
+      setAddressValue(null);
+      onChange(null);
     }
   }, [onChange]); // Address input change
 
