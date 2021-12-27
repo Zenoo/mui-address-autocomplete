@@ -108,7 +108,8 @@ const AddressAutocomplete = _ref => {
             });
           });
           return acc;
-        }, {})
+        }, {}),
+        description: newValue.description
       });
 
       setAddressValue(placeWithComponents);
