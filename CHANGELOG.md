@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.1.0...v0.1.1) (2021-12-27)
+
+
+### Bug Fixes
+
+* Add missing place_id ([1df02cf](https://github.com/Zenoo/mui-address-autocomplete/commit/1df02cf97efcf01caddd2df27c6889a2edf331f2))
+
 ## [0.1.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.18...v0.1.0) (2021-12-27)
 
 
