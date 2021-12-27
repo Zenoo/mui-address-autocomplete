@@ -47,27 +47,29 @@ const AddressAutocomplete = ({
   // Address selection
   const selectAddress = useCallback((_, newValue) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
-    placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
-      const placeWithComponents = {
-        ...place,
-        components: place.address_components.reduce((acc, item) => {
-          item.types.forEach(type => {
-            if (!acc[type]) {
-              acc[type] = [];
-            }
-            acc[type].push({
-              long_name: item.long_name,
-              short_name: item.short_name
+    if (newValue) {
+      placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
+        const placeWithComponents = {
+          ...place,
+          components: place.address_components.reduce((acc, item) => {
+            item.types.forEach(type => {
+              if (!acc[type]) {
+                acc[type] = [];
+              }
+              acc[type].push({
+                long_name: item.long_name,
+                short_name: item.short_name
+              });
             });
-          });
-          return acc;
-        }, {}),
-        description: newValue.description,
-        place_id: newValue.place_id
-      };
-      setAddressValue(placeWithComponents);
-      onChange(placeWithComponents);
-    });
+            return acc;
+          }, {}),
+          description: newValue.description,
+          place_id: newValue.place_id
+        };
+        setAddressValue(placeWithComponents);
+        onChange(placeWithComponents);
+      });
+    }
   }, [onChange]);
 
   // Address input change
