@@ -5,11 +5,13 @@ import throttle from 'lodash.throttle';
 import React, { useCallback, useEffect, useMemo } from 'react';
 
 const autocompleteService = { current: null };
+const placesService = { current: null };
 
 /**
  * AddressAutocomplete component
  * @param {Object} props
  * @param {String} props.apiKey Google Maps API key
+ * @param {String[]} props.fields List of fields to be returned from the API
  * @param {String} props.label  Label for the input
  * @param {Function} props.onChange  Change callback
  * @param {Object} props.value  Address value
@@ -17,6 +19,7 @@ const autocompleteService = { current: null };
  */
 const AddressAutocomplete = ({
   apiKey,
+  fields,
   label,
   onChange,
   value,
@@ -35,14 +38,34 @@ const AddressAutocomplete = ({
   // Options label
   const getOptionLabel = useCallback((option) => (typeof option === 'string' ? option : option.description), []);
 
+  // Autocomplete equals
+  const isOptionEqualToValue = useCallback((option, value) => option.place_id === value.place_id, []);
+
   // Empty filter
   const filterOptions = useCallback((x) => x, []);
 
   // Address selection
   const selectAddress = useCallback((_, newValue) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
-    setAddressValue(newValue);
-    onChange(newValue);
+    placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
+      const placeWithComponents = {
+        ...place,
+        components: place.address_components.reduce((acc, item) => {
+          item.types.forEach(type => {
+            if (!acc[type]) {
+              acc[type] = [];
+            }
+            acc[type].push({
+              long_name: item.long_name,
+              short_name: item.short_name
+            });
+          });
+          return acc;
+        }, {})
+      };
+      setAddressValue(placeWithComponents);
+      onChange(placeWithComponents);
+    });
   }, [onChange]);
 
   // Address input change
@@ -123,8 +146,12 @@ const AddressAutocomplete = ({
     if (!autocompleteService.current && window.google) {
       autocompleteService.current = new window.google.maps.places.AutocompleteService();
     }
+    // Initialize Google Maps Places Service
+    if (!placesService.current && window.google) {
+      placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
+    }
     // Stop execution if the service is not available
-    if (!autocompleteService.current) {
+    if (!autocompleteService.current || !placesService.current) {
       return undefined;
     }
 
@@ -167,6 +194,7 @@ const AddressAutocomplete = ({
       fullWidth
       getOptionLabel={getOptionLabel}
       includeInputInList
+      isOptionEqualToValue={isOptionEqualToValue}
       onChange={selectAddress}
       onInputChange={searchAddress}
       options={addressOptions}
