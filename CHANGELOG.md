@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.16...v0.0.17) (2021-12-27)
+
+
+### Features
+
+* Add test command ([7aad6db](https://github.com/Zenoo/mui-address-autocomplete/commit/7aad6db01d9d86490fc34a80b9c18363c0f10e27))
+* Added places components mapping ([56b859c](https://github.com/Zenoo/mui-address-autocomplete/commit/56b859cd78e3552ad4b6a1d2c1fbb2ce7540153c))
+
 ### [0.0.16](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.0.15...v0.0.16) (2021-12-14)
 
 
