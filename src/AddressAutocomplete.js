@@ -62,7 +62,8 @@ const AddressAutocomplete = ({
           });
           return acc;
         }, {}),
-        description: newValue.description
+        description: newValue.description,
+        place_id: newValue.place_id
       };
       setAddressValue(placeWithComponents);
       onChange(placeWithComponents);
