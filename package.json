@@ -6,7 +6,7 @@
   "module": "dist/index.js",
   "types": "dist/AddressAutocomplete.d.ts",
   "scripts": {
-    "build": "NODE_ENV=production babel src/AddressAutocomplete.jsx --out-dir dist",
+    "build": "NODE_ENV=production babel src/AddressAutocomplete.tsx --out-dir dist",
     "test": "webpack-dev-server --mode development",
     "release": "standard-version -a",
     "custom-publish": "bash ./release-dist.bash"
@@ -33,7 +33,6 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
     "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
@@ -48,8 +47,19 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/eslint-parser": "^7.17.0",
+    "@types/google.maps": "^3.48.5",
     "babel-loader": "^8.2.3",
     "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "standard-version": "^9.3.2",
     "webpack": "^5.65.0",

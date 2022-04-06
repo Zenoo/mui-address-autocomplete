@@ -1,7 +1,8 @@
+/* eslint-disable prefer-named-capture-group */
 const path = require('path');
 const webpack = require('webpack');
 const dotenv = require('dotenv');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 dotenv.config();
 
@@ -26,14 +27,14 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /(node_modules|bower_components)/,
           loader: 'babel-loader',
           options: { presets: ['@babel/env'] }
         }
       ]
     },
-    resolve: { extensions: ['*', '.js', '.jsx'] },
+    resolve: { extensions: ['*', '.js', '.jsx', '.ts', '.tsx'] },
     output: {
       path: path.resolve(__dirname, 'dist2/'),
       filename: 'bundle.js'

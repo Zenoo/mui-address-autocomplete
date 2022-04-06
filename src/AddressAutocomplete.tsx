@@ -1,22 +1,19 @@
 import { LocationOn } from '@mui/icons-material';
-import { Autocomplete, Box, Grid, TextField, Typography } from '@mui/material';
+import { Autocomplete, AutocompleteProps, Box, Grid, TextField, Typography } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { AddressAutocompleteProps } from '../dist/AddressAutocomplete';
 
-const autocompleteService = { current: null };
-const placesService = { current: null };
+type AutocompleteServiceHolder = {
+  current: google.maps.places.AutocompleteService
+}
+const autocompleteService: AutocompleteServiceHolder = { current: null };
+type PlacesServiceHolder = {
+  current: google.maps.places.PlacesService
+}
+const placesService: PlacesServiceHolder = { current: null };
 
-/**
- * AddressAutocomplete component
- * @param {Object} props
- * @param {String} props.apiKey Google Maps API key
- * @param {String[]} props.fields List of fields to be returned from the API
- * @param {String} props.label  Label for the input
- * @param {Function} props.onChange  Change callback
- * @param {Object} props.value  Address value
- * @returns {React.ReactElement}
- */
 const AddressAutocomplete = ({
   apiKey,
   fields,
@@ -24,7 +21,7 @@ const AddressAutocomplete = ({
   onChange,
   value,
   ...rest
-}) => {
+}: AddressAutocompleteProps) => {
   const loaded = React.useRef(false);
   const [addressOptions, setAddressOptions] = React.useState([]);
   const [addressValue, setAddressValue] = React.useState(value);
@@ -39,20 +36,23 @@ const AddressAutocomplete = ({
   const getOptionLabel = useCallback((option) => (typeof option === 'string' ? option : option.description), []);
 
   // Autocomplete equals
-  const isOptionEqualToValue = useCallback((option, value) => option.place_id === value.place_id, []);
+  const isOptionEqualToValue = useCallback(
+    (option, val) => option.place_id === val.place_id,
+    []
+  );
 
   // Empty filter
   const filterOptions = useCallback((x) => x, []);
 
   // Address selection
-  const selectAddress = useCallback((_, newValue) => {
+  const selectAddress = useCallback((event, newValue, reason) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
     if (newValue) {
       placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
         const placeWithComponents = {
           ...place,
           components: place.address_components.reduce((acc, item) => {
-            item.types.forEach(type => {
+            item.types.forEach((type) => {
               if (!acc[type]) {
                 acc[type] = [];
               }
@@ -67,13 +67,13 @@ const AddressAutocomplete = ({
           place_id: newValue.place_id
         };
         setAddressValue(placeWithComponents);
-        onChange(placeWithComponents);
+        onChange(event, placeWithComponents, reason);
       });
     } else {
       setAddressValue(null);
-      onChange(null);
+      onChange(event, null, reason);
     }
-  }, [onChange]);
+  }, [fields, onChange]);
 
   // Address input change
   const searchAddress = useCallback((_, newInputValue) => {
@@ -109,6 +109,7 @@ const AddressAutocomplete = ({
           <Grid item xs>
             {parts.map((part, index) => (
               <span
+                // eslint-disable-next-line react/no-array-index-key
                 key={index}
                 style={{ fontWeight: part.highlight ? 700 : 400 }}
               >
@@ -141,7 +142,9 @@ const AddressAutocomplete = ({
 
   // Autocomplete predictions fetcher
   const fetch = useMemo(() => throttle((request, callback) => {
-    if (autocompleteService.current) autocompleteService.current.getPlacePredictions(request, callback);
+    if (autocompleteService.current) {
+      autocompleteService.current.getPlacePredictions(request, callback);
+    }
   }, 200), []);
 
   // Runs on input change
