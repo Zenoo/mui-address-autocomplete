@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.1...v2.0.2) (2022-04-06)
+
+
+### Bug Fixes
+
+* Missing props when extending base props ([698e003](https://github.com/Zenoo/mui-address-autocomplete/commit/698e00347d5df12307119aac1b79b9ce1f9d07b9))
+
 ### [2.0.1](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.0...v2.0.1) (2022-04-06)
 
 
