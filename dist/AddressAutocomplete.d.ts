@@ -1,11 +1,14 @@
-import { AutocompleteProps, ChipTypeMap } from "@mui/material";
+import { AutocompleteProps, AutocompleteRenderInputParams, ChipTypeMap } from "@mui/material";
 import { AddressAutocompleteResult } from "./AddressAutocompleteResult";
 
 
-export interface AddressAutocompleteProps extends AutocompleteProps<AddressAutocompleteResult, false, boolean, false, ChipTypeMap['defaultComponent']> {
+export interface AddressAutocompleteProps extends Omit<
+  AutocompleteProps<AddressAutocompleteResult, false, boolean, false, ChipTypeMap['defaultComponent']
+  >, 'options' | 'renderInput'> {
   apiKey: string;
   fields?: string[];
   label: string;
+  renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
   value: AddressAutocompleteResult | null;
 }
 
