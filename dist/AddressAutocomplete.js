@@ -33,9 +33,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -49,16 +49,6 @@ const autocompleteService = {
 const placesService = {
   current: null
 };
-/**
- * AddressAutocomplete component
- * @param {Object} props
- * @param {String} props.apiKey Google Maps API key
- * @param {String[]} props.fields List of fields to be returned from the API
- * @param {String} props.label  Label for the input
- * @param {Function} props.onChange  Change callback
- * @param {Object} props.value  Address value
- * @returns {React.ReactElement}
- */
 
 const AddressAutocomplete = _ref => {
   let {
@@ -85,11 +75,11 @@ const AddressAutocomplete = _ref => {
 
   const getOptionLabel = (0, _react.useCallback)(option => typeof option === 'string' ? option : option.description, []); // Autocomplete equals
 
-  const isOptionEqualToValue = (0, _react.useCallback)((option, value) => option.place_id === value.place_id, []); // Empty filter
+  const isOptionEqualToValue = (0, _react.useCallback)((option, val) => option.place_id === val.place_id, []); // Empty filter
 
   const filterOptions = (0, _react.useCallback)(x => x, []); // Address selection
 
-  const selectAddress = (0, _react.useCallback)((_, newValue) => {
+  const selectAddress = (0, _react.useCallback)((event, newValue, reason) => {
     setAddressOptions(previous => newValue ? [newValue, ...previous] : previous);
 
     if (newValue) {
@@ -116,13 +106,13 @@ const AddressAutocomplete = _ref => {
         });
 
         setAddressValue(placeWithComponents);
-        onChange(placeWithComponents);
+        onChange(event, placeWithComponents, reason);
       });
     } else {
       setAddressValue(null);
-      onChange(null);
+      onChange(event, null, reason);
     }
-  }, [onChange]); // Address input change
+  }, [fields, onChange]); // Address input change
 
   const searchAddress = (0, _react.useCallback)((_, newInputValue) => {
     setAddressInputValue(newInputValue);
@@ -154,6 +144,7 @@ const AddressAutocomplete = _ref => {
       item: true,
       xs: true
     }, parts.map((part, index) => /*#__PURE__*/_react.default.createElement("span", {
+      // eslint-disable-next-line react/no-array-index-key
       key: index,
       style: {
         fontWeight: part.highlight ? 700 : 400
@@ -177,7 +168,9 @@ const AddressAutocomplete = _ref => {
 
 
   const fetch = (0, _react.useMemo)(() => (0, _lodash.default)((request, callback) => {
-    if (autocompleteService.current) autocompleteService.current.getPlacePredictions(request, callback);
+    if (autocompleteService.current) {
+      autocompleteService.current.getPlacePredictions(request, callback);
+    }
   }, 200), []); // Runs on input change
 
   (0, _react.useEffect)(() => {

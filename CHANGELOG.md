@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v1.0.0...v2.0.0) (2022-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* onChange now returns the new value as the SECOND parameter.
+
+### Features
+
+* Use Typescript in source. ([b85acc2](https://github.com/Zenoo/mui-address-autocomplete/commit/b85acc283856fb2ed13449190b791ecd180729d9))
+
+
+### Bug Fixes
+
+* Build typescript ([6fccc29](https://github.com/Zenoo/mui-address-autocomplete/commit/6fccc29322c5b852f67dfb4e9bbaa8b7e4c5c686))
+
 ## [1.0.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v0.1.3...v1.0.0) (2022-04-06)
 
 
