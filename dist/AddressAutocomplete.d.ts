@@ -1,4 +1,6 @@
-export interface AddressAutocompleteProps {
+import { AutocompleteProps } from "@mui/material";
+
+export interface AddressAutocompleteProps extends AutocompleteProps {
   apiKey: string;
   fields?: string[];
   label: string;

@@ -17,6 +17,8 @@ import AddressAutocomplete from 'mui-address-autocomplete';
 />
 ```
 
+All of MUI's [`<Autocomplete>`](https://mui.com/api/autocomplete/) props are supported.
+
 ## Demo
 
 ![](https://i.imgur.com/xT77nFw.png)

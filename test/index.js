@@ -9,6 +9,15 @@ const root = document.createElement('div');
 root.id = 'root';
 body.appendChild(root);
 
-ReactDOM.render((<AddressAutocomplete apiKey={process.env.API_KEY} fields={['address_components']} label="Test" onChange={(value) => {
-  console.log(value);
-}} />), root);
+let value = null;
+
+ReactDOM.render((<AddressAutocomplete
+  apiKey={process.env.API_KEY}
+  fields={['address_components']}
+  label="Test"
+  onChange={(val) => {
+    value = val;
+    console.log(val);
+  }}
+  value={value}
+/>), root);

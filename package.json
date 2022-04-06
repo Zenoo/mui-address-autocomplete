@@ -6,9 +6,9 @@
   "module": "dist/index.js",
   "types": "dist/AddressAutocomplete.d.ts",
   "scripts": {
-    "build": "NODE_ENV=production babel src/AddressAutocomplete.js --out-dir dist",
+    "build": "NODE_ENV=production babel src/AddressAutocomplete.jsx --out-dir dist",
     "test": "webpack-dev-server --mode development",
-    "release": "standard-version",
+    "release": "standard-version -a",
     "custom-publish": "bash ./release-dist.bash"
   },
   "repository": {
@@ -76,7 +76,7 @@
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "npm run build && git add dist && git diff --quiet && git diff --staged --quiet || git commit -am \"chore(release): Build\""
+      "prerelease": "npm run build && git add dist"
     }
   }
 }
