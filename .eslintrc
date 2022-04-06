@@ -1,5 +1,6 @@
 {
   "parser": "@babel/eslint-parser",
+  "plugins": ["@typescript-eslint"],
   "env": {
     "es6": true,
     "browser": true
@@ -7,21 +8,10 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": [
-          "src"
-        ],
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
-    }
-  },
+  "ignorePatterns": "dist/**/*",
   "rules": {
     "object-curly-newline": ["error", {
       "ImportDeclaration": "never"

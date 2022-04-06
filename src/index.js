@@ -1,3 +1,3 @@
-import AddressAutocomplete from './AddressAutocomplete';
+import AddressAutocomplete from './AddressAutocomplete.tsx';
 
-export { AddressAutocomplete };
+export default AddressAutocomplete;
