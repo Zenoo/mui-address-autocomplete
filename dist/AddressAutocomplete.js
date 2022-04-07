@@ -53,7 +53,7 @@ const placesService = {
 const AddressAutocomplete = _ref => {
   let {
     apiKey,
-    fields,
+    fields = ['address_components'],
     label,
     onChange,
     value
@@ -88,7 +88,7 @@ const AddressAutocomplete = _ref => {
         fields
       }, place => {
         const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
-          components: place.address_components.reduce((acc, item) => {
+          components: (place.address_components || []).reduce((acc, item) => {
             item.types.forEach(type => {
               if (!acc[type]) {
                 acc[type] = [];
