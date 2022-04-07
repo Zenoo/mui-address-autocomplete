@@ -16,7 +16,7 @@ const placesService: PlacesServiceHolder = { current: null };
 
 const AddressAutocomplete = ({
   apiKey,
-  fields,
+  fields = ['address_components'],
   label,
   onChange,
   value,
@@ -51,7 +51,7 @@ const AddressAutocomplete = ({
       placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
         const placeWithComponents = {
           ...place,
-          components: place.address_components.reduce((acc, item) => {
+          components: (place.address_components || []).reduce((acc, item) => {
             item.types.forEach((type) => {
               if (!acc[type]) {
                 acc[type] = [];
