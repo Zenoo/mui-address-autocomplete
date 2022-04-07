@@ -1,5 +1,13 @@
 # MUI Address Autocomplete
+
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/zenoo/mui-address-autocomplete/@mui/material)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/zenoo/mui-address-autocomplete/react)
+
 A simple, straight-forward address autocomplete component for MUI.
+
+## Demo
+
+![](https://i.imgur.com/xT77nFw.png)
 
 ## Installation
 ```
@@ -97,7 +105,3 @@ interface ResultComponents {
   town_square?: ResultComponent[];
 }
 ```
-
-## Demo
-
-![](https://i.imgur.com/xT77nFw.png)
