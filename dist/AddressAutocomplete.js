@@ -9,6 +9,8 @@ exports.default = void 0;
 
 require("core-js/modules/web.dom-collections.iterator.js");
 
+require("core-js/modules/es.string.includes.js");
+
 require("core-js/modules/es.symbol.description.js");
 
 require("core-js/modules/es.array.reduce.js");
@@ -53,7 +55,7 @@ const placesService = {
 const AddressAutocomplete = _ref => {
   let {
     apiKey,
-    fields = ['address_components'],
+    fields = ['address_components', 'formatted_address'],
     label,
     onChange,
     value
@@ -71,7 +73,19 @@ const AddressAutocomplete = _ref => {
 
   (0, _react.useEffect)(() => {
     setAddressValue(value);
-  }, [value]); // Options label
+  }, [value]); // Prefill fields if needed
+
+  const actualFields = (0, _react.useMemo)(() => {
+    if (!fields.includes('address_components')) {
+      fields.push('address_components');
+    }
+
+    if (!fields.includes('formatted_address')) {
+      fields.push('formatted_address');
+    }
+
+    return fields;
+  }, [fields]); // Options label
 
   const getOptionLabel = (0, _react.useCallback)(option => typeof option === 'string' ? option : option.description, []); // Autocomplete equals
 
@@ -85,7 +99,7 @@ const AddressAutocomplete = _ref => {
     if (newValue) {
       placesService.current.getDetails({
         placeId: newValue.place_id,
-        fields
+        fields: actualFields
       }, place => {
         const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
           structured_formatting: {
@@ -120,7 +134,7 @@ const AddressAutocomplete = _ref => {
       setAddressValue(null);
       onChange(event, null, reason);
     }
-  }, [fields, onChange]); // Address input change
+  }, [actualFields, onChange]); // Address input change
 
   const searchAddress = (0, _react.useCallback)((_, newInputValue) => {
     setAddressInputValue(newInputValue);

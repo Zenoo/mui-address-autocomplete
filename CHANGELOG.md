@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.5...v2.1.0) (2022-04-27)
+
+
+### Features
+
+* Added required formatted_address field ([bcf4bbb](https://github.com/Zenoo/mui-address-autocomplete/commit/bcf4bbbc8607737e1b4ff976d20b0772dca85018))
+
 ### [2.0.5](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.4...v2.0.5) (2022-04-27)
 
 
