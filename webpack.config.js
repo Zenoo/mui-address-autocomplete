@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
   }
 
   return {
-    entry: './test/index.js',
+    entry: './test/index.tsx',
     devtool: dev ? 'source-map' : 'none',
     mode: 'development',
     module: {

@@ -1,15 +1,16 @@
 import React from 'react';
-import AddressAutocomplete from '../dist/AddressAutocomplete';
+import { AddressAutocompleteValue } from '../dist/AddressAutocomplete';
+import AddressAutocomplete from '../src/AddressAutocomplete';
 
 const Component = () => {
-  const [value, setValue] = React.useState(null);
+  const [value, setValue] = React.useState<AddressAutocompleteValue>(null);
 
   console.log(value);
 
   return (
     <AddressAutocomplete
       apiKey={process.env.API_KEY}
-      fields={['address_components']}
+      fields={[]}
       label="Test"
       onChange={(_, val) => {
         setValue(val);

@@ -1,4 +1,4 @@
-import { AutocompleteProps, AutocompleteRenderInputParams, ChipTypeMap } from "@mui/material";
+import { AutocompleteChangeReason, AutocompleteProps, AutocompleteRenderInputParams, ChipTypeMap } from "@mui/material";
 import { AddressAutocompleteResult } from "./AddressAutocompleteResult";
 
 
@@ -29,11 +29,16 @@ export interface AddressAutocompleteValue extends PlaceType, google.maps.places.
 
 export interface AddressAutocompleteProps extends Omit<
   AutocompleteProps<PlaceType, false, boolean, false, ChipTypeMap['defaultComponent']
-  >, 'options' | 'renderInput'> {
+  >, 'options' | 'renderInput' | 'onChange'> {
   apiKey: string;
   fields?: string[];
   label: string;
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
+  onChange: (
+    event: React.SyntheticEvent<Element, Event>,
+    value: AddressAutocompleteValue,
+    reason: AutocompleteChangeReason
+  ) => void;
   value: AddressAutocompleteValue | null;
 }
 

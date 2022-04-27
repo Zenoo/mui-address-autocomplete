@@ -17,7 +17,7 @@ const placesService: PlacesServiceHolder = { current: null };
 
 const AddressAutocomplete = ({
   apiKey,
-  fields = ['address_components'],
+  fields = ['address_components', 'formatted_address'],
   label,
   onChange,
   value,
@@ -32,6 +32,18 @@ const AddressAutocomplete = ({
   useEffect(() => {
     setAddressValue(value);
   }, [value]);
+
+  // Prefill fields if needed
+  const actualFields = useMemo(() => {
+    if(!fields.includes('address_components')) {
+      fields.push('address_components');
+    }
+    if(!fields.includes('formatted_address')) {
+      fields.push('formatted_address');
+    }
+
+    return fields;
+  }, [fields]);
 
   // Options label
   const getOptionLabel = useCallback((option: PlaceType) => (typeof option === 'string' ? option : option.description), []);
@@ -49,7 +61,7 @@ const AddressAutocomplete = ({
   const selectAddress = useCallback((event: React.SyntheticEvent<Element, Event>, newValue: PlaceType | null, reason: AutocompleteChangeReason) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
     if (newValue) {
-      placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place: google.maps.places.PlaceResult) => {
+      placesService.current.getDetails({ placeId: newValue.place_id, fields: actualFields }, (place: google.maps.places.PlaceResult) => {
         const placeWithComponents: AddressAutocompleteValue = {
           ...place,
           structured_formatting: {
@@ -79,7 +91,7 @@ const AddressAutocomplete = ({
       setAddressValue(null);
       onChange(event, null, reason);
     }
-  }, [fields, onChange]);
+  }, [actualFields, onChange]);
 
   // Address input change
   const searchAddress = useCallback((_: React.SyntheticEvent<Element, Event>, newInputValue: string) => {

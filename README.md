@@ -18,9 +18,14 @@ npm i mui-address-autocomplete
 ```ts
 interface AddressAutocompleteProps extends AutocompleteProps {
   apiKey: string;
-  fields?: string[];
+  fields?: string[] = ['address_components', 'formatted_address'];
   label: string;
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
+  onChange: (
+    event: React.SyntheticEvent<Element, Event>,
+    value: AddressAutocompleteValue,
+    reason: AutocompleteChangeReason
+  ) => void;
   value: AddressAutocompleteValue | null;
 }
 ```
@@ -33,7 +38,7 @@ import AddressAutocomplete from 'mui-address-autocomplete';
 <AddressAutocomplete
   apiKey="googlePlacesApiKeyHere"
   label="Address"
-  fields={['address_components']}
+  fields={['geometry']} // fields will always contain address_components and formatted_address, no need to repeat them
   onChange={(_, value) => {
     console.log(value);
   }}
