@@ -215,7 +215,13 @@ const AddressAutocomplete = _ref => {
 
 
     if (addressInputValue === '') {
-      setAddressOptions(addressValue ? [addressValue] : []);
+      setAddressOptions(prev => {
+        if (addressValue && !prev.find(o => o.place_id === addressValue.place_id)) {
+          return [addressValue];
+        }
+
+        return [];
+      });
       return undefined;
     } // Fetch autocomplete predictions
 
