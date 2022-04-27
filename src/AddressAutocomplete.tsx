@@ -188,7 +188,13 @@ const AddressAutocomplete = ({
 
     // Hide options when input is empty
     if (addressInputValue === '') {
-      setAddressOptions(addressValue ? [addressValue] : []);
+      setAddressOptions((prev) => {
+        if (addressValue && !prev.find((o) => o.place_id === addressValue.place_id)){
+          return [addressValue];
+        }
+
+        return [];
+      });
       return undefined;
     }
 
