@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.5](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.4...v2.0.5) (2022-04-27)
+
+
+### Bug Fixes
+
+* Error when clearing the field ([901f515](https://github.com/Zenoo/mui-address-autocomplete/commit/901f5154b5d528dafeb2c95d4d5c6d52fb895d6e))
+
 ### [2.0.4](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.3...v2.0.4) (2022-04-07)
 
 ### [2.0.3](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.0.2...v2.0.3) (2022-04-07)

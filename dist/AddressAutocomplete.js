@@ -88,6 +88,14 @@ const AddressAutocomplete = _ref => {
         fields
       }, place => {
         const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
+          structured_formatting: {
+            main_text: place.formatted_address,
+            secondary_text: place.name,
+            main_text_matched_substrings: [{
+              offset: 0,
+              length: place.formatted_address.length
+            }]
+          },
           components: (place.address_components || []).reduce((acc, item) => {
             item.types.forEach(type => {
               if (!acc[type]) {
