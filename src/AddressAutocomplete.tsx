@@ -203,14 +203,20 @@ const AddressAutocomplete = ({
       if (active) {
         let newOptions = [];
 
-        // Include selected address
-        if (addressValue) {
-          newOptions = [addressValue];
-        }
-
         // Include fetched predictions
         if (results) {
-          newOptions = [...newOptions, ...results];
+          newOptions = results;
+        }
+
+        if (addressValue) {
+          const fetchedAddressValueIndex = newOptions.findIndex((o) => o.place_id === addressValue.place_id);
+          // Include selected address if it is not in the predictions
+          if (fetchedAddressValueIndex === -1) {
+            newOptions = [addressValue, ...newOptions];
+          } else {
+            // Place selected addres at the top if it is in the predictions
+            newOptions = [newOptions[fetchedAddressValueIndex], ...newOptions.slice(0, fetchedAddressValueIndex), ...newOptions.slice(fetchedAddressValueIndex + 1)];
+          }
         }
 
         setAddressOptions(newOptions);
