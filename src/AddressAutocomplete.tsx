@@ -1,9 +1,9 @@
 import { LocationOn } from '@mui/icons-material';
-import { Autocomplete, AutocompleteProps, Box, Grid, TextField, Typography } from '@mui/material';
+import { Autocomplete, AutocompleteChangeReason, AutocompleteProps, AutocompleteRenderInputParams, Box, Grid, TextField, Typography } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { AddressAutocompleteProps } from '../dist/AddressAutocomplete';
+import { AddressAutocompleteProps, AddressAutocompleteValue, PlaceType } from '../dist/AddressAutocomplete';
 
 type AutocompleteServiceHolder = {
   current: google.maps.places.AutocompleteService
@@ -14,6 +14,7 @@ type PlacesServiceHolder = {
 }
 const placesService: PlacesServiceHolder = { current: null };
 
+
 const AddressAutocomplete = ({
   apiKey,
   fields = ['address_components'],
@@ -23,8 +24,8 @@ const AddressAutocomplete = ({
   ...rest
 }: AddressAutocompleteProps) => {
   const loaded = React.useRef(false);
-  const [addressOptions, setAddressOptions] = React.useState([]);
-  const [addressValue, setAddressValue] = React.useState(value);
+  const [addressOptions, setAddressOptions] = React.useState<readonly PlaceType[]>([]);
+  const [addressValue, setAddressValue] = React.useState<AddressAutocompleteValue | null>(value);
   const [addressInputValue, setAddressInputValue] = React.useState('');
 
   // Update inner value when props value change
@@ -33,24 +34,29 @@ const AddressAutocomplete = ({
   }, [value]);
 
   // Options label
-  const getOptionLabel = useCallback((option) => (typeof option === 'string' ? option : option.description), []);
+  const getOptionLabel = useCallback((option: PlaceType) => (typeof option === 'string' ? option : option.description), []);
 
   // Autocomplete equals
   const isOptionEqualToValue = useCallback(
-    (option, val) => option.place_id === val.place_id,
+    (option: PlaceType, val: PlaceType) => option.place_id === val.place_id,
     []
   );
 
   // Empty filter
-  const filterOptions = useCallback((x) => x, []);
+  const filterOptions = useCallback((x: PlaceType[]) => x, []);
 
   // Address selection
-  const selectAddress = useCallback((event, newValue, reason) => {
+  const selectAddress = useCallback((event: React.SyntheticEvent<Element, Event>, newValue: PlaceType | null, reason: AutocompleteChangeReason) => {
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
     if (newValue) {
-      placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place) => {
-        const placeWithComponents = {
+      placesService.current.getDetails({ placeId: newValue.place_id, fields }, (place: google.maps.places.PlaceResult) => {
+        const placeWithComponents: AddressAutocompleteValue = {
           ...place,
+          structured_formatting: {
+            main_text: place.formatted_address,
+            secondary_text: place.name,
+            main_text_matched_substrings: [{ offset: 0, length: place.formatted_address.length }],
+          },
           components: (place.address_components || []).reduce((acc, item) => {
             item.types.forEach((type) => {
               if (!acc[type]) {
@@ -76,17 +82,17 @@ const AddressAutocomplete = ({
   }, [fields, onChange]);
 
   // Address input change
-  const searchAddress = useCallback((_, newInputValue) => {
+  const searchAddress = useCallback((_: React.SyntheticEvent<Element, Event>, newInputValue: string) => {
     setAddressInputValue(newInputValue);
   }, []);
 
   // Address input renderer
-  const renderAddressInput = useCallback((params) => (
+  const renderAddressInput = useCallback((params: AutocompleteRenderInputParams) => (
     <TextField {...params} fullWidth label={label} />
   ), [label]);
 
   // Options renderer
-  const renderAddressOption = useCallback((props, option) => {
+  const renderAddressOption = useCallback((props: React.HTMLAttributes<HTMLLIElement>, option: PlaceType) => {
     const {
       structured_formatting: {
         main_text_matched_substrings: matches
@@ -141,7 +147,10 @@ const AddressAutocomplete = ({
   }
 
   // Autocomplete predictions fetcher
-  const fetch = useMemo(() => throttle((request, callback) => {
+  const fetch = useMemo(() => throttle((
+    request: google.maps.places.AutocompletionRequest,
+    callback: (a: google.maps.places.AutocompletePrediction[], b: google.maps.places.PlacesServiceStatus) => void
+  ) => {
     if (autocompleteService.current) {
       autocompleteService.current.getPlacePredictions(request, callback);
     }
@@ -172,7 +181,7 @@ const AddressAutocomplete = ({
     }
 
     // Fetch autocomplete predictions
-    fetch({ input: addressInputValue }, (results) => {
+    fetch({ input: addressInputValue }, (results: google.maps.places.AutocompletePrediction[]) => {
       if (active) {
         let newOptions = [];
 

@@ -20,7 +20,8 @@ interface AddressAutocompleteProps extends AutocompleteProps {
   apiKey: string;
   fields?: string[];
   label: string;
-  value: AddressAutocompleteResult | null;
+  renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
+  value: AddressAutocompleteValue | null;
 }
 ```
 
@@ -52,56 +53,58 @@ value.components.street_number[0].long_name
 ```
 
 ```ts
-interface ResultComponent {
+interface AddressAutocompleteResultComponent {
   long_name: string;
   short_name: string;
 }
 
-interface ResultComponents {
-  administrative_area_level_1?: ResultComponent[];
-  administrative_area_level_2?: ResultComponent[];
-  administrative_area_level_3?: ResultComponent[];
-  administrative_area_level_4?: ResultComponent[];
-  administrative_area_level_5?: ResultComponent[];
-  administrative_area_level_6?: ResultComponent[];
-  administrative_area_level_7?: ResultComponent[];
-  archipelago?: ResultComponent[];
-  colloquial_area?: ResultComponent[];
-  continent?: ResultComponent[];
-  country?: ResultComponent[];
-  establishment?: ResultComponent[];
-  finance?: ResultComponent[];
-  floor?: ResultComponent[];
-  food?: ResultComponent[];
-  general_contractor?: ResultComponent[];
-  geocode?: ResultComponent[];
-  health?: ResultComponent[];
-  intersection?: ResultComponent[];
-  landmark?: ResultComponent[];
-  locality?: ResultComponent[];
-  natural_feature?: ResultComponent[];
-  neighborhood?: ResultComponent[];
-  place_of_worship?: ResultComponent[];
-  plus_code?: ResultComponent[];
-  point_of_interest?: ResultComponent[];
-  political?: ResultComponent[];
-  post_box?: ResultComponent[];
-  postal_code?: ResultComponent[];
-  postal_code_prefix?: ResultComponent[];
-  postal_code_suffix?: ResultComponent[];
-  postal_town?: ResultComponent[];
-  premise?: ResultComponent[];
-  room?: ResultComponent[];
-  route?: ResultComponent[];
-  street_address?: ResultComponent[];
-  street_number?: ResultComponent[];
-  sublocality?: ResultComponent[];
-  sublocality_level_1?: ResultComponent[];
-  sublocality_level_2?: ResultComponent[];
-  sublocality_level_3?: ResultComponent[];
-  sublocality_level_4?: ResultComponent[];
-  sublocality_level_5?: ResultComponent[];
-  subpremise?: ResultComponent[];
-  town_square?: ResultComponent[];
+interface AddressAutocompleteValue extends PlaceType, google.maps.places.PlaceResult {
+  components: {
+    administrative_area_level_1?: AddressAutocompleteResultComponent[];
+    administrative_area_level_2?: AddressAutocompleteResultComponent[];
+    administrative_area_level_3?: AddressAutocompleteResultComponent[];
+    administrative_area_level_4?: AddressAutocompleteResultComponent[];
+    administrative_area_level_5?: AddressAutocompleteResultComponent[];
+    administrative_area_level_6?: AddressAutocompleteResultComponent[];
+    administrative_area_level_7?: AddressAutocompleteResultComponent[];
+    archipelago?: AddressAutocompleteResultComponent[];
+    colloquial_area?: AddressAutocompleteResultComponent[];
+    continent?: AddressAutocompleteResultComponent[];
+    country?: AddressAutocompleteResultComponent[];
+    establishment?: AddressAutocompleteResultComponent[];
+    finance?: AddressAutocompleteResultComponent[];
+    floor?: AddressAutocompleteResultComponent[];
+    food?: AddressAutocompleteResultComponent[];
+    general_contractor?: AddressAutocompleteResultComponent[];
+    geocode?: AddressAutocompleteResultComponent[];
+    health?: AddressAutocompleteResultComponent[];
+    intersection?: AddressAutocompleteResultComponent[];
+    landmark?: AddressAutocompleteResultComponent[];
+    locality?: AddressAutocompleteResultComponent[];
+    natural_feature?: AddressAutocompleteResultComponent[];
+    neighborhood?: AddressAutocompleteResultComponent[];
+    place_of_worship?: AddressAutocompleteResultComponent[];
+    plus_code?: AddressAutocompleteResultComponent[];
+    point_of_interest?: AddressAutocompleteResultComponent[];
+    political?: AddressAutocompleteResultComponent[];
+    post_box?: AddressAutocompleteResultComponent[];
+    postal_code?: AddressAutocompleteResultComponent[];
+    postal_code_prefix?: AddressAutocompleteResultComponent[];
+    postal_code_suffix?: AddressAutocompleteResultComponent[];
+    postal_town?: AddressAutocompleteResultComponent[];
+    premise?: AddressAutocompleteResultComponent[];
+    room?: AddressAutocompleteResultComponent[];
+    route?: AddressAutocompleteResultComponent[];
+    street_address?: AddressAutocompleteResultComponent[];
+    street_number?: AddressAutocompleteResultComponent[];
+    sublocality?: AddressAutocompleteResultComponent[];
+    sublocality_level_1?: AddressAutocompleteResultComponent[];
+    sublocality_level_2?: AddressAutocompleteResultComponent[];
+    sublocality_level_3?: AddressAutocompleteResultComponent[];
+    sublocality_level_4?: AddressAutocompleteResultComponent[];
+    sublocality_level_5?: AddressAutocompleteResultComponent[];
+    subpremise?: AddressAutocompleteResultComponent[];
+    town_square?: AddressAutocompleteResultComponent[];
+  };
 }
 ```
