@@ -25,7 +25,7 @@ var _lodash = _interopRequireDefault(require("lodash.throttle"));
 
 var _react = _interopRequireWildcard(require("react"));
 
-const _excluded = ["apiKey", "fields", "label", "onChange", "value"];
+const _excluded = ["apiKey", "fields", "label", "onChange", "value", "requestOptions"];
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -58,7 +58,8 @@ const AddressAutocomplete = _ref => {
     fields = ['address_components', 'formatted_address'],
     label,
     onChange,
-    value
+    value,
+    requestOptions = {}
   } = _ref,
       rest = _objectWithoutProperties(_ref, _excluded);
 
@@ -226,9 +227,9 @@ const AddressAutocomplete = _ref => {
     } // Fetch autocomplete predictions
 
 
-    fetch({
+    fetch(_objectSpread(_objectSpread({}, requestOptions), {}, {
       input: addressInputValue
-    }, results => {
+    }), results => {
       if (active) {
         let newOptions = []; // Include fetched predictions
 

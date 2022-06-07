@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.1.2...v2.2.0) (2022-06-07)
+
+
+### Features
+
+* Added requestOptions prop ([ea62687](https://github.com/Zenoo/mui-address-autocomplete/commit/ea626873907480434c067748bd8a7f1802b69787))
+
 ### [2.1.2](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.1.1...v2.1.2) (2022-04-27)
 
 
