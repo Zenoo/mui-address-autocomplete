@@ -21,6 +21,7 @@ const AddressAutocomplete = ({
   label,
   onChange,
   value,
+  requestOptions = {},
   ...rest
 }: AddressAutocompleteProps) => {
   const loaded = React.useRef(false);
@@ -199,7 +200,10 @@ const AddressAutocomplete = ({
     }
 
     // Fetch autocomplete predictions
-    fetch({ input: addressInputValue }, (results: google.maps.places.AutocompletePrediction[]) => {
+    fetch({
+      ...requestOptions,
+      input: addressInputValue,
+    }, (results: google.maps.places.AutocompletePrediction[]) => {
       if (active) {
         let newOptions = [];
 

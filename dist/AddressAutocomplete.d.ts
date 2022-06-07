@@ -40,6 +40,7 @@ export interface AddressAutocompleteProps extends Omit<
     reason: AutocompleteChangeReason
   ) => void;
   value: AddressAutocompleteValue | null;
+  requestOptions?: Omit<google.maps.places.AutocompletionRequest, 'input'>;
 }
 
 /**
