@@ -24,7 +24,7 @@ export interface AddressAutocompleteResultComponent {
 }
 
 export interface AddressAutocompleteValue extends PlaceType, google.maps.places.PlaceResult {
-  components: Record<string, AddressAutocompleteResultComponent>;
+  components: Record<string, AddressAutocompleteResultComponent[]>;
 }
 
 export interface AddressAutocompleteProps extends Omit<
