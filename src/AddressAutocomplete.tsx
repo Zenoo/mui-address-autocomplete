@@ -6,11 +6,11 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { AddressAutocompleteProps, AddressAutocompleteValue, PlaceType } from '../dist/AddressAutocomplete';
 
 type AutocompleteServiceHolder = {
-  current: google.maps.places.AutocompleteService
+  current: google.maps.places.AutocompleteService | null
 }
 const autocompleteService: AutocompleteServiceHolder = { current: null };
 type PlacesServiceHolder = {
-  current: google.maps.places.PlacesService
+  current: google.maps.places.PlacesService | null
 }
 const placesService: PlacesServiceHolder = { current: null };
 
@@ -60,15 +60,21 @@ const AddressAutocomplete = ({
 
   // Address selection
   const selectAddress = useCallback((event: React.SyntheticEvent<Element, Event>, newValue: PlaceType | null, reason: AutocompleteChangeReason) => {
+    if (!placesService.current) {
+      return;
+    }
     setAddressOptions((previous) => (newValue ? [newValue, ...previous] : previous));
-    if (newValue) {
-      placesService.current.getDetails({ placeId: newValue.place_id, fields: actualFields }, (place: google.maps.places.PlaceResult) => {
+    if (newValue && newValue.place_id) {
+      placesService.current.getDetails({ placeId: newValue.place_id, fields: actualFields }, (place: google.maps.places.PlaceResult | null) => {
+        if (!place) {
+          return;
+        }
         const placeWithComponents: AddressAutocompleteValue = {
           ...place,
           structured_formatting: {
-            main_text: place.formatted_address,
-            secondary_text: place.name,
-            main_text_matched_substrings: [{ offset: 0, length: place.formatted_address.length }],
+            main_text: place.formatted_address || '',
+            secondary_text: place.name || '',
+            main_text_matched_substrings: [{ offset: 0, length: place.formatted_address?.length || 0 }],
           },
           components: (place.address_components || []).reduce((acc, item) => {
             item.types.forEach((type) => {
@@ -153,7 +159,7 @@ const AddressAutocomplete = ({
       script.setAttribute('async', '');
       script.setAttribute('id', 'google-maps');
       script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-      document.querySelector('head').appendChild(script);
+      document.querySelector('head')?.appendChild(script);
     }
 
     loaded.current = true;
@@ -162,7 +168,7 @@ const AddressAutocomplete = ({
   // Autocomplete predictions fetcher
   const fetch = useMemo(() => throttle((
     request: google.maps.places.AutocompletionRequest,
-    callback: (a: google.maps.places.AutocompletePrediction[], b: google.maps.places.PlacesServiceStatus) => void
+    callback: (a: google.maps.places.AutocompletePrediction[] | null, b: google.maps.places.PlacesServiceStatus) => void
   ) => {
     if (autocompleteService.current) {
       autocompleteService.current.getPlacePredictions(request, callback);
@@ -203,9 +209,9 @@ const AddressAutocomplete = ({
     fetch({
       ...requestOptions,
       input: addressInputValue,
-    }, (results: google.maps.places.AutocompletePrediction[]) => {
+    }, (results: google.maps.places.AutocompletePrediction[] | null) => {
       if (active) {
-        let newOptions = [];
+        let newOptions: PlaceType[] = [];
 
         // Include fetched predictions
         if (results) {

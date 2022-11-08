@@ -3,13 +3,13 @@ import { AddressAutocompleteValue } from '../dist/AddressAutocomplete';
 import AddressAutocomplete from '../src/AddressAutocomplete';
 
 const Component = () => {
-  const [value, setValue] = React.useState<AddressAutocompleteValue>(null);
+  const [value, setValue] = React.useState<AddressAutocompleteValue | null>(null);
 
   console.log(value);
 
   return (
     <AddressAutocomplete
-      apiKey={process.env.API_KEY}
+      apiKey={process.env.API_KEY || ''}
       fields={[]}
       label="Test"
       onChange={(_, val) => {

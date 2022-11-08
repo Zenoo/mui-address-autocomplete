@@ -36,7 +36,7 @@ export interface AddressAutocompleteProps extends Omit<
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
   onChange: (
     event: React.SyntheticEvent<Element, Event>,
-    value: AddressAutocompleteValue,
+    value: AddressAutocompleteValue | null,
     reason: AutocompleteChangeReason
   ) => void;
   value: AddressAutocompleteValue | null;
