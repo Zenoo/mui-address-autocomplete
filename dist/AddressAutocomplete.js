@@ -95,20 +95,30 @@ const AddressAutocomplete = _ref => {
   const filterOptions = (0, _react.useCallback)(x => x, []); // Address selection
 
   const selectAddress = (0, _react.useCallback)((event, newValue, reason) => {
+    if (!placesService.current) {
+      return;
+    }
+
     setAddressOptions(previous => newValue ? [newValue, ...previous] : previous);
 
-    if (newValue) {
+    if (newValue && newValue.place_id) {
       placesService.current.getDetails({
         placeId: newValue.place_id,
         fields: actualFields
       }, place => {
+        var _place$formatted_addr;
+
+        if (!place) {
+          return;
+        }
+
         const placeWithComponents = _objectSpread(_objectSpread({}, place), {}, {
           structured_formatting: {
-            main_text: place.formatted_address,
-            secondary_text: place.name,
+            main_text: place.formatted_address || '',
+            secondary_text: place.name || '',
             main_text_matched_substrings: [{
               offset: 0,
-              length: place.formatted_address.length
+              length: ((_place$formatted_addr = place.formatted_address) === null || _place$formatted_addr === void 0 ? void 0 : _place$formatted_addr.length) || 0
             }]
           },
           components: (place.address_components || []).reduce((acc, item) => {
@@ -179,11 +189,13 @@ const AddressAutocomplete = _ref => {
 
   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
+      var _document$querySelect;
+
       const script = document.createElement('script');
       script.setAttribute('async', '');
       script.setAttribute('id', 'google-maps');
       script.src = "https://maps.googleapis.com/maps/api/js?key=".concat(apiKey, "&libraries=places");
-      document.querySelector('head').appendChild(script);
+      (_document$querySelect = document.querySelector('head')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.appendChild(script);
     }
 
     loaded.current = true;
