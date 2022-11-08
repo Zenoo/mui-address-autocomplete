@@ -7,14 +7,19 @@ const Component = () => {
 
   console.log(value);
 
+  const changeValue = (
+    _: React.SyntheticEvent<Element, Event>,
+    newValue: AddressAutocompleteValue | null
+  ) => {
+    setValue(newValue);
+  };
+
   return (
     <AddressAutocomplete
       apiKey={process.env.API_KEY || ''}
       fields={[]}
       label="Test"
-      onChange={(_, val) => {
-        setValue(val);
-      }}
+      onChange={changeValue}
       value={value}
     />
   );

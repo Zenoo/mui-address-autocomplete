@@ -114,3 +114,33 @@ interface AddressAutocompleteValue extends PlaceType, google.maps.places.PlaceRe
   };
 }
 ```
+
+## More examples
+
+### Default value
+
+```jsx
+const [value, setValue] = useState<AddressAutocompleteValue | null>({
+  place_id: "ChIJD7fiBh9u5kcRYJSMaMOCCwQ",
+  description: "Paris, France",
+  components: {},
+  structured_formatting: {
+    main_text: "Paris",
+    secondary_text: "France",
+    main_text_matched_substrings: []
+  }
+});
+
+return (
+  <AddressAutocomplete
+    apiKey="googlePlacesApiKeyHere"
+    label="Address"
+    onChange={(_, value) => {
+      setValue(value);
+    }}
+    value={value}
+  />
+);
+```
+
+```
