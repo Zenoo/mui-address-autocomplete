@@ -1,10 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Component from './Component';
 
 const [body] = document.getElementsByTagName('BODY');
-const root = document.createElement('div');
-root.id = 'root';
-body.appendChild(root);
+const rootDiv = document.createElement('div');
+rootDiv.id = 'root';
+body.appendChild(rootDiv);
 
-ReactDOM.render(<Component />, root);
+const root = createRoot(rootDiv);
+root.render(<Component />);
