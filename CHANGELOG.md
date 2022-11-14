@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [release-please](https://github.com/googleapis/release-please) for commit guidelines.
 
 ### [2.2.3](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.2.2...v2.2.3) (2022-11-08)
 
