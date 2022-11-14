@@ -49,7 +49,10 @@ const AddressAutocomplete = ({
   }, [fields]);
 
   // Options label
-  const getOptionLabel = useCallback((option: PlaceType) => (typeof option === 'string' ? option : option.description), []);
+  const getOptionLabel = useCallback(
+    (option: PlaceType) => (typeof option === 'string' ? option : option.description),
+    []
+  );
 
   // Autocomplete equals
   const isOptionEqualToValue = useCallback(
