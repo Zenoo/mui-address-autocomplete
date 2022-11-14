@@ -14,7 +14,9 @@ type PlacesServiceHolder = {
 }
 const placesService: PlacesServiceHolder = { current: null };
 
-
+/**
+ * AddressAutocomplete Component
+ */
 const AddressAutocomplete = ({
   apiKey,
   fields = ['address_components', 'formatted_address'],
