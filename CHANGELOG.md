@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [release-please](https://github.com/googleapis/release-please) for commit guidelines.
 
+## [3.0.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.2.3...v3.0.0) (2022-11-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update to React 18
+
+### Features
+
+* Update to React 18 ([6ec7286](https://github.com/Zenoo/mui-address-autocomplete/commit/6ec72860dc07e1cb020f77fa1ded746bc5204b53))
+
+
+### Bug Fixes
+
+* New release process ([c7e2e00](https://github.com/Zenoo/mui-address-autocomplete/commit/c7e2e005a90410760193b24fb327cbdd2a0e6832))
+* Release script typo ([b2e3752](https://github.com/Zenoo/mui-address-autocomplete/commit/b2e3752f59ff45b1d6b854e7670da58365a71c14))
+
 ### [2.2.3](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.2.2...v2.2.3) (2022-11-08)
 
 ### [2.2.2](https://github.com/Zenoo/mui-address-autocomplete/compare/v2.2.1...v2.2.2) (2022-11-08)
