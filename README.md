@@ -17,7 +17,7 @@ npm i mui-address-autocomplete
 ## Props
 ```ts
 interface AddressAutocompleteProps extends AutocompleteProps {
-  apiKey: string;
+  apiKey?: string;
   fields?: string[] = ['address_components', 'formatted_address'];
   label: string;
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;
