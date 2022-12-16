@@ -30,7 +30,7 @@ export interface AddressAutocompleteValue extends PlaceType, google.maps.places.
 export interface AddressAutocompleteProps extends Omit<
   AutocompleteProps<PlaceType, false, boolean, false, ChipTypeMap['defaultComponent']
   >, 'options' | 'renderInput' | 'onChange'> {
-  apiKey: string;
+  apiKey?: string;
   fields?: string[];
   label: string;
   renderInput?: (params: AutocompleteRenderInputParams) => React.ReactNode;

@@ -157,18 +157,24 @@ const AddressAutocomplete = ({
   }, []);
 
   // Load Google Maps API script if not already loaded
-  if (typeof window !== 'undefined' && !loaded.current) {
-    if (!document.querySelector('#google-maps')) {
-      const script = document.createElement('script');
-
-      script.setAttribute('async', '');
-      script.setAttribute('id', 'google-maps');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-      document.querySelector('head')?.appendChild(script);
+  useEffect(() => {
+    if (typeof window !== 'undefined' && !loaded.current) {
+      if (!document.querySelector('#google-maps')) {
+        const script = document.createElement('script');
+  
+        if (!apiKey) {
+          console.error('You need to provide an API key to use this component');
+        }
+  
+        script.setAttribute('async', '');
+        script.setAttribute('id', 'google-maps');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+        document.querySelector('head')?.appendChild(script);
+      }
+  
+      loaded.current = true;
     }
-
-    loaded.current = true;
-  }
+  }, [apiKey, loaded]);
 
   // Autocomplete predictions fetcher
   const fetch = useMemo(() => throttle((
