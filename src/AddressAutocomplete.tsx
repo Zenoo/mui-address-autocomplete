@@ -1,4 +1,4 @@
-import { LocationOn } from '@mui/icons-material';
+import LocationOn from '@mui/icons-material/LocationOn';
 import { Autocomplete, AutocompleteChangeReason, AutocompleteProps, AutocompleteRenderInputParams, Box, Grid, TextField, Typography } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
