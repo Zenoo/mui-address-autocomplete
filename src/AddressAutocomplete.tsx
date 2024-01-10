@@ -1,8 +1,8 @@
 import LocationOn from '@mui/icons-material/LocationOn';
-import { Autocomplete, AutocompleteChangeReason, AutocompleteProps, AutocompleteRenderInputParams, Box, Grid, TextField, Typography } from '@mui/material';
+import { Autocomplete, AutocompleteChangeReason, AutocompleteRenderInputParams, Box, Grid, TextField, Typography } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AddressAutocompleteProps, AddressAutocompleteValue, PlaceType } from '../dist/AddressAutocomplete';
 
 type AutocompleteServiceHolder = {
@@ -26,10 +26,10 @@ const AddressAutocomplete = ({
   requestOptions = {},
   ...rest
 }: AddressAutocompleteProps) => {
-  const loaded = React.useRef(false);
-  const [addressOptions, setAddressOptions] = React.useState<readonly PlaceType[]>([]);
-  const [addressValue, setAddressValue] = React.useState<AddressAutocompleteValue | null>(value);
-  const [addressInputValue, setAddressInputValue] = React.useState('');
+  const loaded = useRef(false);
+  const [addressOptions, setAddressOptions] = useState<readonly PlaceType[]>([]);
+  const [addressValue, setAddressValue] = useState<AddressAutocompleteValue | null>(value);
+  const [addressInputValue, setAddressInputValue] = useState('');
 
   // Update inner value when props value change
   useEffect(() => {
@@ -49,22 +49,16 @@ const AddressAutocomplete = ({
   }, [fields]);
 
   // Options label
-  const getOptionLabel = useCallback(
-    (option: PlaceType) => (typeof option === 'string' ? option : option.description),
-    []
-  );
+  const getOptionLabel = (option: PlaceType) => (typeof option === 'string' ? option : option.description);
 
   // Autocomplete equals
-  const isOptionEqualToValue = useCallback(
-    (option: PlaceType, val: PlaceType) => option.place_id === val.place_id,
-    []
-  );
+  const isOptionEqualToValue = (option: PlaceType, val: PlaceType) => option.place_id === val.place_id;
 
   // Empty filter
-  const filterOptions = useCallback((x: PlaceType[]) => x, []);
+  const filterOptions = (x: PlaceType[]) => x;
 
   // Address selection
-  const selectAddress = useCallback((event: React.SyntheticEvent<Element, Event>, newValue: PlaceType | null, reason: AutocompleteChangeReason) => {
+  const selectAddress = (event: React.SyntheticEvent<Element, Event>, newValue: PlaceType | null, reason: AutocompleteChangeReason) => {
     if (!placesService.current) {
       return;
     }
@@ -103,20 +97,20 @@ const AddressAutocomplete = ({
       setAddressValue(null);
       onChange(event, null, reason);
     }
-  }, [actualFields, onChange]);
+  };
 
   // Address input change
-  const searchAddress = useCallback((_: React.SyntheticEvent<Element, Event>, newInputValue: string) => {
+  const searchAddress = (_: React.SyntheticEvent<Element, Event>, newInputValue: string) => {
     setAddressInputValue(newInputValue);
-  }, []);
+  };
 
   // Address input renderer
-  const renderAddressInput = useCallback((params: AutocompleteRenderInputParams) => (
+  const renderAddressInput = (params: AutocompleteRenderInputParams) => (
     <TextField {...params} fullWidth label={label} />
-  ), [label]);
+  );
 
   // Options renderer
-  const renderAddressOption = useCallback((props: React.HTMLAttributes<HTMLLIElement>, option: PlaceType) => {
+  const renderAddressOption = (props: React.HTMLAttributes<HTMLLIElement>, option: PlaceType) => {
     const {
       structured_formatting: {
         main_text_matched_substrings: matches
@@ -128,7 +122,7 @@ const AddressAutocomplete = ({
     );
 
     return (
-      <li {...props}>
+      <Box component="li" {...props}>
         <Grid alignItems="center" container>
           <Grid item>
             <Box
@@ -152,9 +146,9 @@ const AddressAutocomplete = ({
             </Typography>
           </Grid>
         </Grid>
-      </li>
+      </Box>
     );
-  }, []);
+  };
 
   // Load Google Maps API script if not already loaded
   useEffect(() => {
