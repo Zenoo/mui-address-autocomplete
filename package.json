@@ -36,15 +36,15 @@
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
     "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
+    "@emotion/styled": "^11.11.5",
     "@googlemaps/js-api-loader": "^1.16.6",
-    "@mui/icons-material": "^5.15.3",
-    "@mui/material": "^5.15.3",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
     "autosuggest-highlight": "^3.3.4",
-    "core-js": "^3.19.3",
+    "core-js": "^3.37.1",
     "lodash.throttle": "^4.1.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
