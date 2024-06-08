@@ -27,7 +27,6 @@ const AddressAutocomplete = ({
   requestOptions = {},
   ...rest
 }: AddressAutocompleteProps) => {
-  const loaded = useRef(false);
   const [addressOptions, setAddressOptions] = useState<readonly PlaceType[]>([]);
   const [addressValue, setAddressValue] = useState<AddressAutocompleteValue | null>(value);
   const [addressInputValue, setAddressInputValue] = useState('');
