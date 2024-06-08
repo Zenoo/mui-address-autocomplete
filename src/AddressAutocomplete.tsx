@@ -4,6 +4,7 @@ import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AddressAutocompleteProps, AddressAutocompleteValue, PlaceType } from '../dist/AddressAutocomplete';
+import { Loader } from '@googlemaps/js-api-loader';
 
 type AutocompleteServiceHolder = {
   current: google.maps.places.AutocompleteService | null
@@ -30,6 +31,7 @@ const AddressAutocomplete = ({
   const [addressOptions, setAddressOptions] = useState<readonly PlaceType[]>([]);
   const [addressValue, setAddressValue] = useState<AddressAutocompleteValue | null>(value);
   const [addressInputValue, setAddressInputValue] = useState('');
+  const [google, setGoogle] = useState<google.maps.PlacesLibrary | null>(null);
 
   // Update inner value when props value change
   useEffect(() => {
@@ -150,25 +152,26 @@ const AddressAutocomplete = ({
     );
   };
 
-  // Load Google Maps API script if not already loaded
+  // Load Google Maps API if not already loaded
   useEffect(() => {
-    if (typeof window !== 'undefined' && !loaded.current) {
-      if (!document.querySelector('#google-maps')) {
-        const script = document.createElement('script');
+    if (google) return;
   
-        if (!apiKey) {
-          console.error('You need to provide an API key to use this component');
-        }
-  
-        script.setAttribute('async', '');
-        script.setAttribute('id', 'google-maps');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
-        document.querySelector('head')?.appendChild(script);
-      }
-  
-      loaded.current = true;
+    if (!apiKey) {
+      console.error('You need to provide an API key to use this component');
+      return;
     }
-  }, [apiKey, loaded]);
+
+    const loader = new Loader({
+      apiKey,
+      version: 'weekly',
+    });
+
+    loader.importLibrary('places').then((google) => {
+      setGoogle(google);
+    }).catch((err) => {
+      console.error(err);
+    });
+  }, [apiKey]);
 
   // Autocomplete predictions fetcher
   const fetch = useMemo(() => throttle((
@@ -185,13 +188,15 @@ const AddressAutocomplete = ({
     // Lock worker
     let active = true;
 
+    if (!google) return;
+
     // Initialize Google Maps Autocomplete Service
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+    if (!autocompleteService.current) {
+      autocompleteService.current = new google.AutocompleteService();
     }
     // Initialize Google Maps Places Service
-    if (!placesService.current && window.google) {
-      placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
+    if (!placesService.current) {
+      placesService.current = new google.PlacesService(document.createElement('div'));
     }
     // Stop execution if the service is not available
     if (!autocompleteService.current || !placesService.current) {
