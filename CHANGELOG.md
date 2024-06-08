@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [release-please](https://github.com/googleapis/release-please) for commit guidelines.
 
+## [3.1.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v3.0.6...v3.1.0) (2024-06-08)
+
+
+### Features
+
+* Use @googlemaps/js-api-loader ([b40a984](https://github.com/Zenoo/mui-address-autocomplete/commit/b40a9846dfd8fcbc763fdfe309561b109caaa1c7))
+
+
+### Bug Fixes
+
+* Update deps ([d7d1627](https://github.com/Zenoo/mui-address-autocomplete/commit/d7d162718087cbc2dd6c436afada65fd412c24c0))
+
 ## [3.0.6](https://github.com/Zenoo/mui-address-autocomplete/compare/v3.0.5...v3.0.6) (2024-01-10)
 
 
