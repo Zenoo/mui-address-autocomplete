@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [release-please](https://github.com/googleapis/release-please) for commit guidelines.
 
+## [3.1.1](https://github.com/Zenoo/mui-address-autocomplete/compare/v3.1.0...v3.1.1) (2024-06-08)
+
+
+### Bug Fixes
+
+* Cleanup unused code ([4ad61ce](https://github.com/Zenoo/mui-address-autocomplete/commit/4ad61ce6ec7af4d1d2500bb8a1ff3bf359f3016b))
+
 ## [3.1.0](https://github.com/Zenoo/mui-address-autocomplete/compare/v3.0.6...v3.1.0) (2024-06-08)
 
 
