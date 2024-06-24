@@ -2,7 +2,7 @@ import LocationOn from '@mui/icons-material/LocationOn';
 import { Autocomplete, AutocompleteChangeReason, AutocompleteRenderInputParams, Box, Grid, TextField, Typography } from '@mui/material';
 import parse from 'autosuggest-highlight/parse';
 import throttle from 'lodash.throttle';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AddressAutocompleteProps, AddressAutocompleteValue, PlaceType } from '../dist/AddressAutocomplete';
 import { Loader } from '@googlemaps/js-api-loader';
 
