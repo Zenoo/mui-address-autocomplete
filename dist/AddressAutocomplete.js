@@ -14,6 +14,7 @@ var _material = require("@mui/material");
 var _parse = _interopRequireDefault(require("autosuggest-highlight/parse"));
 var _lodash = _interopRequireDefault(require("lodash.throttle"));
 var _react = _interopRequireWildcard(require("react"));
+var _jsApiLoader = require("@googlemaps/js-api-loader");
 const _excluded = ["apiKey", "fields", "label", "onChange", "value", "requestOptions"];
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -44,10 +45,10 @@ const AddressAutocomplete = _ref => {
       requestOptions = {}
     } = _ref,
     rest = _objectWithoutProperties(_ref, _excluded);
-  const loaded = (0, _react.useRef)(false);
   const [addressOptions, setAddressOptions] = (0, _react.useState)([]);
   const [addressValue, setAddressValue] = (0, _react.useState)(value);
   const [addressInputValue, setAddressInputValue] = (0, _react.useState)('');
+  const [google, setGoogle] = (0, _react.useState)(null);
 
   // Update inner value when props value change
   (0, _react.useEffect)(() => {
@@ -140,6 +141,7 @@ const AddressAutocomplete = _ref => {
         main_text_matched_substrings: matches
       }
     } = option;
+    if (!matches) return null;
     const parts = (0, _parse.default)(option.structured_formatting.main_text, matches.map(match => [match.offset, match.offset + match.length]));
     return /*#__PURE__*/_react.default.createElement(_material.Box, _extends({
       component: "li"
@@ -167,23 +169,23 @@ const AddressAutocomplete = _ref => {
     }, option.structured_formatting.secondary_text))));
   };
 
-  // Load Google Maps API script if not already loaded
+  // Load Google Maps API if not already loaded
   (0, _react.useEffect)(() => {
-    if (typeof window !== 'undefined' && !loaded.current) {
-      if (!document.querySelector('#google-maps')) {
-        var _document$querySelect;
-        const script = document.createElement('script');
-        if (!apiKey) {
-          console.error('You need to provide an API key to use this component');
-        }
-        script.setAttribute('async', '');
-        script.setAttribute('id', 'google-maps');
-        script.src = "https://maps.googleapis.com/maps/api/js?key=".concat(apiKey, "&libraries=places");
-        (_document$querySelect = document.querySelector('head')) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.appendChild(script);
-      }
-      loaded.current = true;
+    if (google) return;
+    if (!apiKey) {
+      console.error('You need to provide an API key to use this component');
+      return;
     }
-  }, [apiKey, loaded]);
+    const loader = new _jsApiLoader.Loader({
+      apiKey,
+      version: 'weekly'
+    });
+    loader.importLibrary('places').then(google => {
+      setGoogle(google);
+    }).catch(err => {
+      console.error(err);
+    });
+  }, [apiKey]);
 
   // Autocomplete predictions fetcher
   const fetch = (0, _react.useMemo)(() => (0, _lodash.default)((request, callback) => {
@@ -196,14 +198,15 @@ const AddressAutocomplete = _ref => {
   (0, _react.useEffect)(() => {
     // Lock worker
     let active = true;
+    if (!google) return;
 
     // Initialize Google Maps Autocomplete Service
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current = new window.google.maps.places.AutocompleteService();
+    if (!autocompleteService.current) {
+      autocompleteService.current = new google.AutocompleteService();
     }
     // Initialize Google Maps Places Service
-    if (!placesService.current && window.google) {
-      placesService.current = new window.google.maps.places.PlacesService(document.createElement('div'));
+    if (!placesService.current) {
+      placesService.current = new google.PlacesService(document.createElement('div'));
     }
     // Stop execution if the service is not available
     if (!autocompleteService.current || !placesService.current) {
